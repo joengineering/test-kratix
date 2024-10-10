@@ -1,0 +1,7 @@
+pod:
+  minReplicas: 1
+  maxReplicas: 2
+  minAvailable: 0
+  distribution:
+    zones: single  # or single
+    maxSkew: 0

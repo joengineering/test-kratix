@@ -1,0 +1,57 @@
+general:
+  organisation: belfius
+  dockerRegistryUrl: https://nonprod.acr.azure.com
+application:
+  name: UNDEFINED
+  code: UNDEFINED
+container:
+  image:
+    name: ${application.name}
+    version: UNDEFINED
+    pullPolicy: Always
+  additionalLabels:
+    - name: blb
+      value: dlldl
+    - name: lbl2
+      value: dkkek2
+  uri: '${general.dockerRegistryUrl}/${general.organisation}/${application.code}/${container.image.name}:${container.image.version}'
+  imagePullPolicy: Always
+  targetPort: 8080
+  prometheus:
+    scrape: true
+    path: /prometheus
+    port: ${container.port}
+  readinessProbe:
+    enabled: true
+    path: /
+    port: ${container.port}
+    initialDelaySeconds: 15
+    failureThreshold: 5
+  livenessProbe:
+    enabled: true
+    path: /
+    port: ${container.port}
+    initialDelaySeconds: 60
+    failureThreshold: 1
+    timeoutSeconds: 5
+  resources:
+    requests:
+      memory: 2M
+      cpu: 5m
+    limits:
+      memory: 4M
+      cpu: 10m
+pod:
+  minReplicas: 1
+  maxReplicas: 2
+  minAvailable: 1
+  scaleMetric: CPU
+  scaleTarget: 70
+  distribution:
+    zones: multi  # or single
+    maxSkew: 1
+    whenUnsatisfiable: ScheduleAnyway
+service:
+  version: 1
+  port: 80
+  type: Deployment # or Statefulset

@@ -1,0 +1,10 @@
+general:
+  dockerRegistryUrl: https://prod.acr.azure.com
+pod:
+  minReplicas: 3
+  maxReplicas: 10
+  minAvailable: 2
+
+  distribution:
+    zones: multi  # or single
+    maxSkew: 1

@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{appComponent.name}}-v{{appComponent.service.version}}
+  namespace: {{appComponent.appCode}}
+  labels:
+    app: {{appComponent.name}}
+    app.kubernetes.io/name: {{appComponent.name}}
+    appversion:  v{{appComponent.service.version}}
+    app.kubernetes.io/version:  v{{appComponent.service.version}}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{appComponent.name}}
+      app.kubernetes.io/version: v{{appComponent.service.version}}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{appComponent.name}}
+        app.kubernetes.io/version: v{{appComponent.service.version}}
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/actuator/prometheus'
+        prometheus.io/port: {{appComponent.container.port}}
+    spec:
+{{#appComponent.scaleConfig.isMultiZone}}
+      topologySpreadConstraints:
+      - maxSkew: {{appComponent.scaleConfig.maxSkew}}
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: {{appComponent.name}}
+            app.kubernetes.io/version: v{{appComponent.service.version}}
+{{/appComponent.scaleConfig.isMultiZone}}
+      containers:
+      - name: {{appComponent.container.name}}
+        image: {{appComponent.container.image}}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{appComponent.container.port}}
+        env:
+          TODO
+        resources:
+          requests:
+            memory: {{appComponent.resources.memory}}
+            cpu: {{appComponent.resources.cpu}}
+          limits:
+            memory: {{appComponent.resources.memoryLimit}}
+            cpu: {{appComponent.resources.cpuLimit}}
+{{#appComponent.container.probesEnabled}}
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: {{appComponent.container.port}}
+          initialDelaySeconds: 15
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: {{appComponent.container.port}}
+          initialDelaySeconds: 60
+          failureThreshold: 1
+          timeoutSeconds: 5
+{{/appComponent.container.probesEnabled}}
+

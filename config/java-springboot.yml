@@ -1,0 +1,14 @@
+container:
+  readinessProbe:
+    path: /actuator/health/readiness
+  livenessProbe:
+    path: /actuator/health/liveness
+  prometheus:
+    path: /actuator/prometheus
+  resources:
+    requests:
+      memory: 2G
+      cpu: 500m
+    limits:
+      memory: 4G
+      cpu: 2
