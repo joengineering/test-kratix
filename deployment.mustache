@@ -18,10 +18,6 @@ spec:
       labels:
         app.kubernetes.io/name: {{appComponent.name}}
         app.kubernetes.io/version: v{{appComponent.service.version}}
-      annotations:
-        prometheus.io/scrape: 'true'
-        prometheus.io/path: '/actuator/prometheus'
-        prometheus.io/port: {{appComponent.container.port}}
     spec:
 {{#appComponent.scaleConfig.isMultiZone}}
       topologySpreadConstraints:
