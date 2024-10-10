@@ -39,8 +39,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: {{appComponent.container.port}}
-        env:
-          TODO
         resources:
           requests:
             memory: {{appComponent.resources.memory}}
