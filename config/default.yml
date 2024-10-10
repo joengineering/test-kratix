@@ -8,13 +8,13 @@ container:
   image:
     name: ${application.name}
     version: UNDEFINED
+    uri: '${general.dockerRegistryUrl}/${general.organisation}/${application.code}/${container.image.name}:${container.image.version}'
     pullPolicy: Always
   additionalLabels:
     - name: blb
       value: dlldl
     - name: lbl2
       value: dkkek2
-  uri: '${general.dockerRegistryUrl}/${general.organisation}/${application.code}/${container.image.name}:${container.image.version}'
   imagePullPolicy: Always
   targetPort: 8080
   prometheus:

@@ -35,7 +35,7 @@ spec:
 {{/appComponent.scaleConfig.isMultiZone}}
       containers:
       - name: {{appComponent.container.name}}
-        image: {{appComponent.container.image}}
+        image: {{appComponent.container.uri}}
         imagePullPolicy: Always
         ports:
         - containerPort: {{appComponent.container.port}}
