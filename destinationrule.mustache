@@ -1,9 +1,10 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: dr-{{target.name}}-v{{target.version}}
+  namespace: {{appComponent.appCode}}
+  name: {{appComponent.name}}-v{{appComponent.service.version}}
 spec:
-  host:  {{target.name}}-v{{target.version}}-{{appCode}}.svc.cluster.local
+  host: {{appComponent.name}}-v{{appComponent.service.version}}.{{appComponent.appCode}}.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: LEAST_REQUEST
