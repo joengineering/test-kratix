@@ -2,13 +2,15 @@ kind: Service
 apiVersion: v1
 metadata:
   namespace: {{appComponent.appCode}}
-  name: {{appComponent.name}}
+  name: {{appComponent.name}}-v{{appComponent.service.version}}
   labels:
     app.kubernetes.io/name: {{appComponent.name}}
+    app.kubernetes.io/version: v{{appComponent.service.version}}
 spec:
   type: ClusterIP
   selector:
     app.kubernetes.io/name: {{appComponent.name}}
+    app.kubernetes.io/version: v{{appComponent.service.version}}
   ports:
   - name: http-application
     protocol: TCP
