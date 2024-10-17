@@ -40,8 +40,7 @@ spec:
             memory: {{appComponent.resources.memory}}
             cpu: {{appComponent.resources.cpu}}
           limits:
-            memory: {{appComponent.resources.memoryLimit}}
-            cpu: {{appComponent.resources.cpuLimit}}
+            memory: {{appComponent.resources.memory}}
 {{#appComponent.container.probesEnabled}}
         readinessProbe:
           httpGet:
