@@ -1,0 +1,10 @@
+keyvault:
+  sku: Standard
+  location: westeurope
+  index: 1
+storage:
+  sku: Standard
+  location: westeurope
+  replication: zone
+  type: blob
+  index: 1
