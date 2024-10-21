@@ -16,7 +16,7 @@ spec:
     - uri:
         prefix: "{{prefix}}"
 {{#hasVersionSelector}}
-    - headers:
+      headers:
         x-api-version:
           exact: "v{{version}}"
 {{/hasVersionSelector}}
