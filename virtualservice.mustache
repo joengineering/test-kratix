@@ -11,6 +11,25 @@ spec:
   hosts:
     - {{hostname}}
   http:
+{{#customRoutes}}
+  - match:
+    - uri:
+        prefix: "{{prefix}}"
+{{#hasVersionSelector}}
+    - headers:
+        x-api-version:
+          exact: "v{{version}}"
+{{/hasVersionSelector}}
+{{#method}}
+    - method:
+        exact: "{{.}}"
+{{/method}}
+    rewrite:
+      uri: "{{rewrite}}"
+    route:
+    - destination:
+        host: {{destination}}
+{{/customRoutes}}
 {{#defaultRoute}}
   - match:
     - uri:
