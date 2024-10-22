@@ -1,0 +1,38 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: vs-{{service.name}}-mesh
+  namespace: {{namespace}}
+spec:
+  hosts:
+    - {{internalHostname}}.{{namespace}}.svc.cluster.local
+  http:
+{{#customRoutes}}
+  - match:
+    - uri:
+        prefix: "{{prefix}}"
+{{#hasVersionSelector}}
+      headers:
+        x-api-version:
+          exact: "v{{version}}"
+{{/hasVersionSelector}}
+{{#method}}
+    - method:
+        exact: "{{.}}"
+{{/method}}
+    rewrite:
+      uri: "{{rewrite}}"
+    route:
+    - destination:
+        host: {{destination}}
+{{/customRoutes}}
+{{#defaultRoute}}
+  - match:
+    - uri:
+        prefix: "{{prefix}}"
+    rewrite:
+      uri: "{{rewrite}}"
+    route:
+    - destination:
+        host: {{destination}}
+{{/defaultRoute}}

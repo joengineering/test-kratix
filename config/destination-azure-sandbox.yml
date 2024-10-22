@@ -1,0 +1,4 @@
+istio:
+  namespace:
+    default: aks-istio-system
+    ingress: aks-istio-ingress

@@ -1,0 +1,7 @@
+istio:
+  namespace:
+    default: istio-system
+    ingress: ${istio.namespace.default}
+gateways:
+  external: ${istio.namespace.ingress}/mygateway
+  test: ${istio.namespace.ingress}/testgateway
