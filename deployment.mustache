@@ -24,7 +24,7 @@ spec:
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/path: '/actuator/prometheus'
-        prometheus.io/port: {{appComponent.container.port}}
+        prometheus.io/port: '{{appComponent.container.port}}'
     spec:
 {{#appComponent.identity}}
       serviceAccountName: {{appComponent.name}}
