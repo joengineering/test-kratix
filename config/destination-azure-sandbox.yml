@@ -2,3 +2,6 @@ istio:
   namespace:
     default: aks-istio-system
     ingress: aks-istio-ingress
+identity:
+  supports-managed-id: true
+  tenant-id: 54947238-c4b1-4ce0-9ec3-11ceaa36ed8b

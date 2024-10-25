@@ -5,3 +5,6 @@ istio:
 gateways:
   external: ${istio.namespace.ingress}/mygateway
   test: ${istio.namespace.ingress}/testgateway
+identity:
+  supports-managed-id: false
+  tenant-id: 54947238-c4b1-4ce0-9ec3-11ceaa36ed8b

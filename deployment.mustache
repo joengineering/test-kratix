@@ -54,7 +54,15 @@ spec:
         env:
 {{#envVars}}
           - name: {{name}}
-            value: {{value}}
+{{#value}}
+            value: {{.}}
+{{/value}}
+{{#valueFrom}}
+            valueFrom:
+              secretKeyRef:
+                name: {{secretKeyRef.name}}
+                key: {{secretKeyRef.key}}
+{{/valueFrom}}
 {{/envVars}}
 {{#appComponent.container.probesEnabled}}
         readinessProbe:
@@ -71,4 +79,3 @@ spec:
           failureThreshold: 1
           timeoutSeconds: 5
 {{/appComponent.container.probesEnabled}}
-
