@@ -52,6 +52,10 @@ spec:
           limits:
             memory: {{appComponent.resources.memory}}
         env:
+{{#appComponent.mountVolumes}}
+          - name: ADDITIONAL_CONFIG_FOLDER
+            value: /config
+{{/appComponent.mountVolumes}}
 {{#envVars}}
           - name: {{name}}
 {{#value}}
