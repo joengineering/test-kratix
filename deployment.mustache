@@ -79,3 +79,20 @@ spec:
           failureThreshold: 1
           timeoutSeconds: 5
 {{/appComponent.container.probesEnabled}}
+{{#appComponent.mountVolumes}}
+        volumeMounts:
+{{#appComponent.infrarefs}}
+          - name: {{.}}
+            mountPath: "/config"
+            readOnly: true
+{{/appComponent.infrarefs}}
+      volumes:
+{{#appComponent.infrarefs}}
+      - name: {{.}}
+        configMap:
+          name: {{.}}
+          items:
+          - key: "{{.}}.properties"
+            path: "{{.}}.properties"
+{{/appComponent.infrarefs}}
+{{/appComponent.mountVolumes}}
